@@ -1,25 +1,31 @@
-name: Deploy to Railway
+name: Deployment Pipeline
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
+
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: epgarzonr/ApiRest_Node.js
+          path: 3api
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
+      - run: npm install
+        working-directory: ApiRest_Node.js
 
-      - name: Install Railway CLI
+      - name: Install Railway
         run: npm i -g @railway/cli
 
-      - name: Deploy to Railway
-        run: railway up
+      - name: Deploy
+        run: railway up --service ApiRest_Node.js
+        working-directory: ApiRest_Node.js
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.TOKEN3 }}
