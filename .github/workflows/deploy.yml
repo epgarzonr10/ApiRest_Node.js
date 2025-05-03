@@ -28,7 +28,7 @@ jobs:
         name: Install Railway CLI
 
       # Step 5: Desplegar la aplicación en Railway
-      - run: railway up --service <SERVICE_NAME>
+      - run: railway up --service ApiRest_Node.js
         name: Deploy to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Usa el token de Railway desde los Secrets
