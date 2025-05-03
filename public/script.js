@@ -5,7 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             mensajeElement.textContent = 'Cargando...';
             
-            const response = await fetch('http://localhost:3000/hello/mensaje');
+            const apiUrl = window.location.hostname === 'localhost' 
+                ? 'http://localhost:3000/hello/mensaje' 
+                : 'https://apirestnodejs-production-87da.up.railway.app/hello/mensaje';
+            
+            const response = await fetch(apiUrl);
             
             if (!response.ok) {
                 throw new Error('Error en la comunicación con el servidor');
