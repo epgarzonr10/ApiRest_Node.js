@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Elementos del DOM
     const mensajeElement = document.getElementById('mensaje');
     
     async function cargarMensaje() {
