@@ -3,29 +3,33 @@ name: Deployment Pipeline
 on:
   push:
     branches:
-      - main
+      - main  # O la rama que prefieras
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout del código desde GitHub
       - uses: actions/checkout@v2
+        name: Checkout code
+
+      # Step 2: Configurar Node.js
+      - uses: actions/setup-node@v2
         with:
-          repository: epgarzonr10/ApiRest_Node.js
-          path: ApiRest_Node.js
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
+          node-version: '18'  # Asegúrate de que sea compatible con tu proyecto
+
+      # Step 3: Instalar las dependencias
       - run: npm install
-        working-directory: ApiRest_Node.js
+        working-directory: .
 
-      - name: Install Railway
-        run: npm i -g @railway/cli
+      # Step 4: Instalar el CLI de Railway
+      - run: npm install -g @railway/cli
+        name: Install Railway CLI
 
-      - name: Deploy
-        run: railway up --service ApiRest_Node.js
-        working-directory: ApiRest_Node.js
+      # Step 5: Desplegar la aplicación en Railway
+      - run: railway up --service <SERVICE_NAME>
+        name: Deploy to Railway
         env:
-          RAILWAY_TOKEN: ${{ secrets.TOKEN3 }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}  # Usa el token de Railway desde los Secrets
+
